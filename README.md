@@ -8,7 +8,7 @@
     - to facilitate easy data retrieval for the user.
     - Filter options for advance search.
   - ##### Pagination
-    - Assuming we have millions of records, we don't want our API to retrieve records all at once as it will slow down our server.
+    - Assuming we have millions of records, we don't want our API to retrieve records all at once as it will slow down both the client app and server.
   - ##### Actions (Create, Edit, Calculate, Delete)
     - Access to the feature should be restricted to certain roles (such as administrator or super-user).
   - ##### Client validations
