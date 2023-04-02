@@ -1,4 +1,4 @@
-﻿namespace Sprout.Exam.Business.DataTransferObjects
+﻿namespace Sprout.Exam.Common.DataTransferObjects
 {
     public class CreateEmployeeDto: BaseSaveEmployeeDto
     {

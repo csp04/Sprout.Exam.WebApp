@@ -1,7 +1,8 @@
-﻿using Sprout.Exam.Business.DataTransferObjects;
+﻿
+using Sprout.Exam.Common.DataTransferObjects;
 using System.Collections.Generic;
 
-namespace Sprout.Exam.WebApp
+namespace Sprout.Exam.WebApp.Tests
 {
     public static class StaticEmployees
     {

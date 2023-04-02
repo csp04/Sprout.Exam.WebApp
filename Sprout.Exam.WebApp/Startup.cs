@@ -7,10 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sprout.Exam.Business.Computations.SalaryCalculator;
-using Sprout.Exam.WebApp.Data;
-using Sprout.Exam.WebApp.Models;
-using Sprout.Exam.WebApp.Repositories;
-using Sprout.Exam.WebApp.Services;
+using Sprout.Exam.Business.Models;
+using Sprout.Exam.DataAccess.Data;
+using Sprout.Exam.DataAccess.Repositories;
 
 namespace Sprout.Exam.WebApp
 {
@@ -48,7 +47,6 @@ namespace Sprout.Exam.WebApp
             
             services.AddScoped<ISalaryCalculatorFactory, SalaryCalculatorFactory>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IEmployeeService, EmployeeService>();
 
 
             // In production, the React files will be served from this directory

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Sprout.Exam.Business.DataTransferObjects
+namespace Sprout.Exam.Common.DataTransferObjects
 {
     public class EditEmployeeDto: BaseSaveEmployeeDto
     {

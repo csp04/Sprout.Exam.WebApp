@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Sprout.Exam.WebApp.Models
+namespace Sprout.Exam.Business.Models
 {
     public  class Employee
     {

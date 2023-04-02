@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Sprout.Exam.Business.DataTransferObjects;
-using Sprout.Exam.WebApp.Exceptions;
-using Sprout.Exam.WebApp.Services;
+using Sprout.Exam.Business.Computations.SalaryCalculator;
+using Sprout.Exam.Common.DataTransferObjects;
+using Sprout.Exam.Common.Enums;
+using Sprout.Exam.DataAccess.Repositories;
+using System;
 using System.Threading.Tasks;
 
 namespace Sprout.Exam.WebApp.Controllers
@@ -12,114 +14,88 @@ namespace Sprout.Exam.WebApp.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly IEmployeeService service;
+        private readonly IEmployeeRepository repository;
+        private readonly ISalaryCalculatorFactory salaryCalculatorFactory;
 
-        public EmployeesController(IEmployeeService service) => this.service = service;
+        public EmployeesController(IEmployeeRepository repository, ISalaryCalculatorFactory salaryCalculatorFactory)
+        {
+            this.repository = repository;
+            this.salaryCalculatorFactory = salaryCalculatorFactory;
+        }
 
-        /// <summary>
-        /// Refactor this method to go through proper layers and fetch from the DB.
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var employees = await service.GetAll();
+            var employees = await repository.FindAllAsync();
             return Ok(employees);
         }
 
-        /// <summary>
-        /// Refactor this method to go through proper layers and fetch from the DB.
-        /// </summary>
-        /// <returns></returns>
+  
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            try
-            {
-                var employee = await service.FindById(id);
+            var employee = await repository.FindAsync(id);
 
-                return Ok(employee);
-            }
-            catch (EmployeeNotFoundException)
-            {
-                return NotFound("Employee not found.");
-            }
-           
+            if(employee == null) return NotFound("Employee not found.");
+
+            return Ok(employee);
         }
 
-        /// <summary>
-        /// Refactor this method to go through proper layers and update changes to the DB.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, EditEmployeeDto input)
+       
+        [HttpPut]
+        public async Task<IActionResult> Put(EditEmployeeDto input)
         {
-            try
+            if(await repository.UpdateAsync(input))
             {
-                var _id = await service.UpdateEmployee(input);
+                return Ok();
+            }
 
-                return Ok(_id);
-            }
-            catch (EmployeeNotFoundException)
-            {
-                return NotFound("Employee not found.");
-            }
+            return NotFound("Employee not found.");
         }
 
-        /// <summary>
-        /// Refactor this method to go through proper layers and insert employees to the DB.
-        /// </summary>
-        /// <returns></returns>
+   
         [HttpPost]
         public async Task<IActionResult> Post(CreateEmployeeDto input)
         {
           
-            var id = await service.CreateEmployee(input);
+            var id = await repository.CreateAsync(input);
 
             return Created($"/api/employees/{id}", id);
         }
 
 
-        /// <summary>
-        /// Refactor this method to go through proper layers and perform soft deletion of an employee to the DB.
-        /// </summary>
-        /// <returns></returns>
+    
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            try
+            if(await repository.DeleteAsync(id))
             {
-                await service.DeleteById(id);
-
                 return Ok(id);
             }
-            catch (EmployeeNotFoundException)
-            {
-                return NotFound("Employee not found.");
-            }
+
+            return NotFound("Employee not found.");
         }
 
 
-
-        /// <summary>
-        /// Refactor this method to go through proper layers and use Factory pattern
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpPost("{id}/calculate")]
         public async Task<IActionResult> Calculate(int id, EmployeeWorkDaysDto input)
         {
+            var employee = await repository.FindAsync(id);
+
+            if(employee == null) return NotFound("Employee not found.");
+
+            EmployeeTypeEnum type = (EmployeeTypeEnum)employee.TypeId;
+
             try
             {
-                var income = await service.CalculateSalary(id, input.AbsentDays, input.WorkedDays);
+                // will throw an error if the value of EmployeeTypeEnum doesn't exists.
+                var calculator = salaryCalculatorFactory.GetSalaryCalculator(type);
+
+                var income = Math.Round(calculator.Compute(input.AbsentDays, input.WorkedDays), 2);
 
                 return Ok(income);
             }
-            catch (EmployeeNotFoundException)
-            {
-                return NotFound("Employee not found.");
-            }
-            catch (EmployeeTypeNotFoundException)
+            catch (Exception)
             {
                 return NotFound("Employee Type not found.");
             }

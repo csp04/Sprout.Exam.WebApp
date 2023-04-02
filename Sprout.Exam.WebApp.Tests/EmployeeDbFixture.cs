@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sprout.Exam.WebApp.Data;
-using Sprout.Exam.WebApp.Models;
+using Sprout.Exam.Business.Models;
+using Sprout.Exam.DataAccess.Data;
 using System;
 using System.Linq;
 

@@ -1,9 +1,9 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Sprout.Exam.Business.Computations.SalaryCalculator;
-using Sprout.Exam.Business.DataTransferObjects;
+using Sprout.Exam.Common.DataTransferObjects;
+using Sprout.Exam.DataAccess.Repositories;
 using Sprout.Exam.WebApp.Controllers;
-using Sprout.Exam.WebApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +24,7 @@ namespace Sprout.Exam.WebApp.Tests
 
             var salaryCalculatorFactory = new SalaryCalculatorFactory();
 
-            var service = new EmployeeService(repository, salaryCalculatorFactory);
-
-            controller = new EmployeesController(service);
+            controller = new EmployeesController(repository, salaryCalculatorFactory);
         }
 
         [Fact]
@@ -79,7 +77,7 @@ namespace Sprout.Exam.WebApp.Tests
 
             employee.FullName = "Updated";
 
-            await controller.Put(employee.Id, new EditEmployeeDto
+            await controller.Put(new EditEmployeeDto
             {
                 Id = employee.Id,
                 FullName = employee.FullName,
@@ -101,7 +99,7 @@ namespace Sprout.Exam.WebApp.Tests
         public async Task ShouldReturnNotFound_OnUpdate_When_EmployeeId_DoesntExists()
         {
             
-            var result = await controller.Put(999999, new EditEmployeeDto
+            var result = await controller.Put(new EditEmployeeDto
             {
                 Id = 9999,
                 FullName = "Test",
@@ -212,7 +210,7 @@ namespace Sprout.Exam.WebApp.Tests
 
             Assert.NotNull(employee);
 
-            await controller.Put(employee.Id, new EditEmployeeDto
+            await controller.Put( new EditEmployeeDto
             {
                 Id = employee.Id,
                 FullName = employee.FullName,

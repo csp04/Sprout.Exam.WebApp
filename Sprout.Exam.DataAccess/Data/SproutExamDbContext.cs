@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sprout.Exam.WebApp.Models;
+using Sprout.Exam.Business.Models;
 
 #nullable disable
 
-namespace Sprout.Exam.WebApp.Data
+namespace Sprout.Exam.DataAccess.Data
 {
     public partial class SproutExamDbContext : DbContext
     {
