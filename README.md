@@ -18,8 +18,8 @@
 - ##### Tech Debt
   - ##### State management like redux, redux/toolkit
     - Implementing state management can improve development efficiency in the long term by promoting consistency in handling of states across the codebase.
-  - ##### Well structured folders
-    - ##### There are two approaches that I like
+  - ##### React Project Structure
+    - ##### Any can be useful
       - ##### a.) Group similar files
         - components/ui (reusable components)
         - slices (state management + webapp logics)
@@ -31,8 +31,3 @@
         - features (contains the api, child component, page, state management(slice), and other related for this feature)
         - components/ui (reusable components)
         - utils/helpers (helper functions)
-- ##### Architectural Design
-  - ##### Use Monolithic
-    - For smaller projects, a monolithic approach may be more appropriate.
-  - ##### Use N-Layer
-    - For enterprise applications that have the potential to expand in various areas.
