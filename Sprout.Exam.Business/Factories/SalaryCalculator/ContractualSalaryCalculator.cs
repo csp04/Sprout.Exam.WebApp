@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sprout.Exam.Business.Computations.SalaryCalculator
+namespace Sprout.Exam.Business.Factories.SalaryCalculator
 {
     internal class ContractualSalaryCalculator : ISalaryCalculator
     {

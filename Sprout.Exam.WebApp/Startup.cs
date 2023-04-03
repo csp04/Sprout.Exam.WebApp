@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Sprout.Exam.Business.Computations.SalaryCalculator;
+using Sprout.Exam.Business.Factories.SalaryCalculator;
 using Sprout.Exam.Business.Models;
 using Sprout.Exam.DataAccess.Data;
 using Sprout.Exam.DataAccess.Repositories;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Sprout.Exam.Business.Computations.SalaryCalculator;
+using Sprout.Exam.Business.Factories.SalaryCalculator;
 using Sprout.Exam.Common.DataTransferObjects;
 using Sprout.Exam.Common.Enums;
 using Sprout.Exam.DataAccess.Repositories;
